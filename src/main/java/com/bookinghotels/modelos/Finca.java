@@ -34,7 +34,13 @@ public class Finca extends Alojamiento implements IDiaDeSol{
 
     @Override
     public void mostrarInfoDiaDeSol() {
-
+        if(tieneDiaDeSol()){
+            System.out.println("Actividades: " + diaDeSol.getActividades());
+            System.out.println("Extras: ");
+            for(String extra : diaDeSol.getExtras()){
+                System.out.println("- " + extra);
+            }
+        }
     }
 
     // Getters y Setters
