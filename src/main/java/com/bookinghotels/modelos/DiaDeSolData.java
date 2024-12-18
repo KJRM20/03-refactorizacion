@@ -7,6 +7,13 @@ public class DiaDeSolData {
     private List<String> extras;
     private Float precioPorPersona;
 
+    //Constructor
+    public DiaDeSolData(String actividades, List<String> extras, Float precioPorPersona) {
+        this.actividades = actividades;
+        this.extras = extras;
+        this.precioPorPersona = precioPorPersona;
+    }
+
     //Getters y Setters
     public String getActividades() {
         return actividades;
