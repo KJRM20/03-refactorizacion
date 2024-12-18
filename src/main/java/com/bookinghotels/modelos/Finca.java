@@ -31,10 +31,6 @@ public class Finca extends Alojamiento implements IDiaDeSol{
         }
     }
 
-    @Override
-    public void mostrarInformacion() {
-        System.out.println("Info");
-    }
 
     @Override
     public boolean tieneDiaDeSol() {
@@ -42,13 +38,24 @@ public class Finca extends Alojamiento implements IDiaDeSol{
     }
 
     @Override
-    public void mostrarInfoDiaDeSol() {
+    public void mostrarInfoDiaDeSol(int cantPersonas, LocalDate fechaInicio) {
         if(tieneDiaDeSol()){
+            System.out.println("\n+--------------- " + nombre + " ---------------+");
+            System.out.println("Calificación: " + calificacion );
+            if (!descripcion.isEmpty()){
+                System.out.println("Descripción: " + calificacion );
+            }
             System.out.println("Actividades: " + diaDeSol.getActividades());
             System.out.println("Extras: ");
             for(String extra : diaDeSol.getExtras()){
                 System.out.println("- " + extra);
             }
+            float precioBase = calcularPrecioBaseDiaSol(cantPersonas);
+            float precioTotal = calcularPrecioTotal(precioBase, fechaInicio, fechaInicio);
+            System.out.println("Precio por persona: $" + diaDeSol.getPrecioPorPersona());
+            System.out.println("Precio base: $" + precioBase);
+            System.out.println("Precio Total: $" + precioTotal);
+            System.out.println("+---------------------------------------------+");
         }
     }
 

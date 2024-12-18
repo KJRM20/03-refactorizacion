@@ -8,7 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Alojamiento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Alojamiento.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Apartamento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Apartamento.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/DiaDeSolData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/DiaDeSolData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Finca.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Finca.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Hotel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Hotel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/IDiaDeSol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/IDiaDeSol.java" afterDir="false" />

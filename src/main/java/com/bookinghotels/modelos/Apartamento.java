@@ -33,11 +33,6 @@ public class Apartamento extends Alojamiento{
         }
     }
 
-    @Override
-    public void mostrarInformacion() {
-        System.out.println("Info");
-    }
-
     // Getters y Setters
     public Integer getPiso() {
         return piso;

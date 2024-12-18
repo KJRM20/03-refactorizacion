@@ -27,9 +27,30 @@ public abstract class Alojamiento {
     // Métodos abstractos
     public abstract  boolean estaDisponible(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones);
     public abstract float calcularPrecioBase(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones);
-    public abstract void mostrarInformacion();
+    //public abstract void mostrarInformacion(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones);
 
     // Métodos concretos
+
+    public void mostrarInformacion(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones) {
+        System.out.println("\n+--------------- " + nombre + " ---------------+");
+        System.out.println("Calificación: " + calificacion );
+        if (!descripcion.isEmpty()){
+            System.out.println("Descripción: " + calificacion );
+        }
+        float precioPorNoche = calcularPrecioBase(fechaInicio, fechaInicio, cantPersonas,cantHabitaciones);
+        float precioBase = calcularPrecioBase(fechaInicio, fechaFin, cantPersonas,cantHabitaciones);
+        float precioTotal = calcularPrecioTotal(precioBase, fechaInicio, fechaFin);
+        System.out.println("Precio por noche: $" + precioPorNoche);
+        System.out.println("Precio base: $" + precioBase);
+        if(calcularAjustePrecio(fechaInicio,fechaFin) > 0){
+            System.out.println("Incremento de " + calcularAjustePrecio(fechaInicio,fechaFin) * 100 + "%");
+        }else if(calcularAjustePrecio(fechaInicio, fechaFin) < 0){
+            System.out.println("Descuento de " + calcularAjustePrecio(fechaInicio,fechaFin) * 100 + "%");
+        }
+        System.out.println("Precio Total: $" + precioTotal);
+        System.out.println("+---------------------------------------------+");
+    }
+
     public void agregarHabitacion(Habitacion habitacion){
         habitaciones.add(habitacion);
     }
@@ -38,7 +59,7 @@ public abstract class Alojamiento {
         return precioBase * calcularAjustePrecio(fechaInicio, fechaFin);
     }
 
-    private float calcularAjustePrecio(LocalDate fechaInicio, LocalDate fechaFin){
+    public float calcularAjustePrecio(LocalDate fechaInicio, LocalDate fechaFin){
         boolean[] aplicaDescuento = new boolean[]{false,false,false};
         long diasEstadia = ChronoUnit.DAYS.between(fechaInicio, fechaFin.plusDays(1));
 
