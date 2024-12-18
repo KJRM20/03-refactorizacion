@@ -23,8 +23,8 @@ public class Finca extends Alojamiento{
     }
 
     @Override
-    public float mostrarInformacion() {
-        return 0;
+    public void mostrarInformacion() {
+        System.out.println("Info");
     }
 
     // Getters y Setters

@@ -7,9 +7,9 @@ public class Hotel extends Alojamiento{
     private Boolean servicioHabitacion;
 
     // Constructor
-    public Hotel(String nombre, String ciudad, Float calificacion, Integer maxAdultos, Integer maxNinos, DiaDeSolData diaDeSolData, Boolean servicioHabitacion) {
+    public Hotel(String nombre, String ciudad, Float calificacion, Integer maxAdultos, Integer maxNinos, DiaDeSolData diaDeSol, Boolean servicioHabitacion) {
         super(nombre, ciudad, calificacion, maxAdultos, maxNinos);
-        this.diaDeSolData = diaDeSolData;
+        this.diaDeSol = diaDeSol;
         this.servicioHabitacion = servicioHabitacion;
     }
 
@@ -25,8 +25,8 @@ public class Hotel extends Alojamiento{
     }
 
     @Override
-    public float mostrarInformacion() {
-        return 0;
+    public void mostrarInformacion() {
+        System.out.println("Info");
     }
 
 

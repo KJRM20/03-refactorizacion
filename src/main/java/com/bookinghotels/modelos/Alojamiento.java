@@ -25,7 +25,7 @@ public abstract class Alojamiento {
     // Métodos abstractos
     public abstract  boolean estaDisponible(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones);
     public abstract float calcularPrecioBase(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones);
-    public abstract float mostrarInformacion();
+    public abstract void mostrarInformacion();
 
     // Métodos concretos
     public float calcularPrecioTotal(float precioBase, LocalDate fechaInicio, LocalDate fechaFin){
