@@ -1,14 +1,17 @@
 package com.bookinghotels.modelos;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Finca extends Alojamiento implements IDiaDeSol{
     private DiaDeSolData diaDeSol;
+    private Float precioPorNoche;
 
     // Constructores
-    public Finca(String nombre, String ciudad, Float calificacion, Integer maxAdultos, Integer maxNinos, DiaDeSolData diaDeSol) {
+    public Finca(String nombre, String ciudad, Float calificacion, Integer maxAdultos, Integer maxNinos, float precioPorNoche, DiaDeSolData diaDeSol) {
         super(nombre, ciudad, calificacion, maxAdultos, maxNinos);
         this.diaDeSol = diaDeSol;
+        this.precioPorNoche = precioPorNoche;
     }
 
     // Métodos
@@ -19,7 +22,13 @@ public class Finca extends Alojamiento implements IDiaDeSol{
 
     @Override
     public float calcularPrecioBase(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones) {
-        return 0;
+        int capacidadFinca = maxAdultos + maxNinos;
+        long diasEstadia = ChronoUnit.DAYS.between(fechaInicio, fechaFin.plusDays(1));
+        if(cantPersonas > capacidadFinca){
+            throw new IllegalArgumentException("La capacidad máxima de la finca es de " + capacidadFinca + " personas.");
+        } else {
+            return precioPorNoche * (float) diasEstadia;
+        }
     }
 
     @Override
@@ -42,6 +51,12 @@ public class Finca extends Alojamiento implements IDiaDeSol{
             }
         }
     }
+
+    @Override
+    public float calcularPrecioBaseDiaSol(int cantPersonas) {
+        return diaDeSol.getPrecioPorPersona() * cantPersonas;
+    }
+
 
     // Getters y Setters
     public DiaDeSolData getDiaDeSol() {

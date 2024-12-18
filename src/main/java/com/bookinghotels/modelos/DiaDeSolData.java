@@ -5,6 +5,7 @@ import java.util.List;
 public class DiaDeSolData {
     private String actividades;
     private List<String> extras;
+    private Float precioPorPersona;
 
     //Getters y Setters
     public String getActividades() {
@@ -21,5 +22,13 @@ public class DiaDeSolData {
 
     public void setExtras(List<String> extras) {
         this.extras = extras;
+    }
+
+    public Float getPrecioPorPersona() {
+        return precioPorPersona;
+    }
+
+    public void setPrecioPorPersona(Float precioPorPersona) {
+        this.precioPorPersona = precioPorPersona;
     }
 }

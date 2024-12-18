@@ -1,6 +1,7 @@
 package com.bookinghotels.modelos;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Hotel extends Alojamiento implements IDiaDeSol{
     private DiaDeSolData diaDeSol;
@@ -21,7 +22,14 @@ public class Hotel extends Alojamiento implements IDiaDeSol{
 
     @Override
     public float calcularPrecioBase(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones) {
-        return 0;
+        float precioMenor = Float.MAX_VALUE;
+        long diasEstadia = ChronoUnit.DAYS.between(fechaInicio, fechaFin.plusDays(1));
+        for (Habitacion habitacion : habitaciones){
+            if(habitacion.getPrecioPorNoche() < precioMenor){
+                precioMenor = habitacion.getPrecioPorNoche();
+            }
+        }
+        return precioMenor * (float) diasEstadia * (float) cantHabitaciones;
     }
 
     @Override
@@ -43,6 +51,11 @@ public class Hotel extends Alojamiento implements IDiaDeSol{
                 System.out.println("- " + extra);
             }
         }
+    }
+
+    @Override
+    public float calcularPrecioBaseDiaSol(int cantPersonas) {
+        return diaDeSol.getPrecioPorPersona() * cantPersonas;
     }
 
     //Getters y Setters

@@ -2,6 +2,7 @@ package com.bookinghotels.modelos;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Alojamiento {
@@ -20,6 +21,7 @@ public abstract class Alojamiento {
         this.calificacion = calificacion;
         this.maxAdultos = maxAdultos;
         this.maxNinos = maxNinos;
+        this.habitaciones = new ArrayList<>();
     }
 
     // Métodos abstractos
@@ -28,6 +30,10 @@ public abstract class Alojamiento {
     public abstract void mostrarInformacion();
 
     // Métodos concretos
+    public void agregarHabitacion(Habitacion habitacion){
+        habitaciones.add(habitacion);
+    }
+
     public float calcularPrecioTotal(float precioBase, LocalDate fechaInicio, LocalDate fechaFin){
         return precioBase * calcularAjustePrecio(fechaInicio, fechaFin);
     }
