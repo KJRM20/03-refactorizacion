@@ -2,7 +2,7 @@ package com.bookinghotels.modelos;
 
 import java.time.LocalDate;
 
-public class Finca extends Alojamiento{
+public class Finca extends Alojamiento implements IDiaDeSol{
     private DiaDeSolData diaDeSol;
 
     // Constructores
@@ -25,6 +25,16 @@ public class Finca extends Alojamiento{
     @Override
     public void mostrarInformacion() {
         System.out.println("Info");
+    }
+
+    @Override
+    public boolean tieneDiaDeSol() {
+        return false;
+    }
+
+    @Override
+    public void mostrarInfoDiaDeSol() {
+
     }
 
     // Getters y Setters
