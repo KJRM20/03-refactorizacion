@@ -2,6 +2,7 @@ package com.bookinghotels.modelos;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 public abstract class Alojamiento {
     protected String nombre;
@@ -10,8 +11,9 @@ public abstract class Alojamiento {
     protected String descripcion;
     protected Integer maxAdultos;
     protected Integer maxNinos;
+    protected List<Habitacion> habitaciones;
 
-    // Constructores
+    // Constructor
     public Alojamiento(String nombre, String ciudad, Float calificacion, Integer maxAdultos, Integer maxNinos) {
         this.nombre = nombre;
         this.ciudad = ciudad;
@@ -93,5 +95,13 @@ public abstract class Alojamiento {
 
     public void setMaxNinos(Integer maxNinos) {
         this.maxNinos = maxNinos;
+    }
+
+    public List<Habitacion> getHabitaciones() {
+        return habitaciones;
+    }
+
+    public void setHabitaciones(List<Habitacion> habitaciones) {
+        this.habitaciones = habitaciones;
     }
 }
