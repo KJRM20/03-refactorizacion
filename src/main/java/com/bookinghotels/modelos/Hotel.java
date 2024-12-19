@@ -24,7 +24,7 @@ public class Hotel extends Alojamiento implements IDiaDeSol{
                    ++cantHabitacionesDisponibles;
                }
            }
-       } while (cantHabitacionesDisponibles < cantHabitaciones);
+       } while (cantHabitacionesDisponibles > cantHabitaciones);
         return true;
     }
 
@@ -54,7 +54,7 @@ public class Hotel extends Alojamiento implements IDiaDeSol{
         if(tieneDiaDeSol()){
             System.out.println("\n+--------------- " + nombre + " ---------------+");
             System.out.println("Calificación: " + calificacion );
-            if (!descripcion.isEmpty()){
+            if (descripcion != null){
                 System.out.println("Descripción: " + calificacion );
             }
             System.out.println("Actividades: " + diaDeSol.getActividades());
@@ -63,9 +63,15 @@ public class Hotel extends Alojamiento implements IDiaDeSol{
                 System.out.println("- " + extra);
             }
             float precioBase = calcularPrecioBaseDiaSol(cantPersonas);
+
             float precioTotal = calcularPrecioTotal(precioBase, fechaInicio, fechaInicio);
             System.out.println("Precio por persona: $" + diaDeSol.getPrecioPorPersona());
             System.out.println("Precio base: $" + precioBase);
+            if(calcularAjustePrecio(fechaInicio,fechaInicio) > 0){
+                System.out.println("Incremento de " + calcularAjustePrecio(fechaInicio,fechaInicio) * 100 + "%");
+            }else if(calcularAjustePrecio(fechaInicio, fechaInicio) < 0){
+                System.out.println("Descuento de " + calcularAjustePrecio(fechaInicio,fechaInicio) * 100 + "%");
+            }
             System.out.println("Precio Total: $" + precioTotal);
             System.out.println("+---------------------------------------------+");
         }

@@ -32,11 +32,10 @@ public abstract class Alojamiento {
     //public abstract void mostrarInformacion(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones);
 
     // Métodos concretos
-
     public void mostrarInformacion(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones) {
         System.out.println("\n+--------------- " + nombre + " ---------------+");
         System.out.println("Calificación: " + calificacion );
-        if (!descripcion.isEmpty()){
+        if (descripcion != null){
             System.out.println("Descripción: " + calificacion );
         }
         float precioPorNoche = calcularPrecioBase(fechaInicio, fechaInicio, cantPersonas,cantHabitaciones);
@@ -58,7 +57,7 @@ public abstract class Alojamiento {
     }
 
     public float calcularPrecioTotal(float precioBase, LocalDate fechaInicio, LocalDate fechaFin){
-        return precioBase * calcularAjustePrecio(fechaInicio, fechaFin);
+        return precioBase + (precioBase * calcularAjustePrecio(fechaInicio, fechaFin));
     }
 
     public float calcularAjustePrecio(LocalDate fechaInicio, LocalDate fechaFin){

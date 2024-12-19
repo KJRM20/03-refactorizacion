@@ -7,9 +7,8 @@
     <list default="true" id="6553db53-e3fe-47a3-a420-6c14b605080a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/logicaNegocio/FiltrodeAlojamientos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/logicaNegocio/FiltroDeAlojamientos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/logicaNegocio/FiltroDeAlojamientos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/logicaNegocio/FiltroDeAlojamientos.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Alojamiento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Alojamiento.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Apartamento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Apartamento.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Finca.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Finca.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Hotel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Hotel.java" afterDir="false" />
     </list>
@@ -45,6 +44,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Gradle.booking-hotels [:com.bookinghotels.Main.main()].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "develop",
     "kotlin-language-version-configured": "true",
@@ -61,21 +61,5 @@
       <updated>1734551302367</updated>
     </task>
     <servers />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/bookinghotels/Main.java</url>
-          <line>44</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/bookinghotels/Main.java</url>
-          <line>36</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
