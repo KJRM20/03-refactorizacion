@@ -41,7 +41,10 @@
     - Sigue las instrucciones que se presentan en la consola para realizar las operaciones disponibles.
 
 ## Arquitectura y Funcionalidad
-El proyecto está organizado en una estructura simple basada en POO que simula una base de datos en memoria:
+El proyecto está organizado en una estructura simple basada en POO que simula una base de datos en memoria.
+
+![Texto alternativo](assets/Booking diagrama clases POO.jpg)
+
 ### Datos Simulados
 - **Alojamientos**:
     - Se almacena información de hoteles, apartamentos, fincas y días de sol.
