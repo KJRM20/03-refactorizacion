@@ -86,12 +86,4 @@ public class Finca extends Alojamiento implements IDiaDeSol{
     }
 
 
-    // Getters y Setters
-    public DiaDeSolData getDiaDeSol() {
-        return diaDeSol;
-    }
-
-    public void setDiaDeSol(DiaDeSolData diaDeSol) {
-        this.diaDeSol = diaDeSol;
-    }
 }

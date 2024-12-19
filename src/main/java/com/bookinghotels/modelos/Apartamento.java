@@ -37,20 +37,4 @@ public class Apartamento extends Alojamiento{
         }
     }
 
-    // Getters y Setters
-    public Integer getPiso() {
-        return piso;
-    }
-
-    public void setPiso(Integer piso) {
-        this.piso = piso;
-    }
-
-    public String getNumeroApartamento() {
-        return numeroApartamento;
-    }
-
-    public void setNumeroApartamento(String numeroApartamento) {
-        this.numeroApartamento = numeroApartamento;
-    }
 }

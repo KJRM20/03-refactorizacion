@@ -96,71 +96,16 @@ public abstract class Alojamiento {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public String getCiudad() {
         return ciudad;
-    }
-
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
     }
 
     public String getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public Float getCalificacion() {
-        return calificacion;
-    }
-
-    public void setCalificacion(Float calificacion) {
-        this.calificacion = calificacion;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public Integer getMaxAdultos() {
-        return maxAdultos;
-    }
-
-    public void setMaxAdultos(Integer maxAdultos) {
-        this.maxAdultos = maxAdultos;
-    }
-
-    public Integer getMaxNinos() {
-        return maxNinos;
-    }
-
-    public void setMaxNinos(Integer maxNinos) {
-        this.maxNinos = maxNinos;
-    }
-
-    public Integer getMaxPersonas() {
-        return maxPersonas;
-    }
-
-    public void setMaxPersonas(Integer maxPersonas) {
-        this.maxPersonas = maxPersonas;
-    }
-
     public List<Habitacion> getHabitaciones() {
         return habitaciones;
     }
 
-    public void setHabitaciones(List<Habitacion> habitaciones) {
-        this.habitaciones = habitaciones;
-    }
 }

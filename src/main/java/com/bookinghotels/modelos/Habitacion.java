@@ -40,43 +40,12 @@ public class Habitacion {
     }
 
     // Getters y Setters
-    public Integer getCapacidad() {
-        return capacidad;
-    }
-
-    public void setCapacidad(Integer capacidad) {
-        this.capacidad = capacidad;
-    }
-
-    public Integer getHabitacionesDisponibles() {
-        return habitacionesDisponibles;
-    }
-
-    public void setHabitacionesDisponibles(Integer habitacionesDisponibles) {
-        this.habitacionesDisponibles = habitacionesDisponibles;
-    }
-
     public Float getPrecioPorNoche() {
         return precioPorNoche;
-    }
-
-    public void setPrecioPorNoche(Float precioPorNoche) {
-        this.precioPorNoche = precioPorNoche;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 
     public String getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
 }

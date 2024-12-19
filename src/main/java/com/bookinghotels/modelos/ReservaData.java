@@ -35,10 +35,6 @@ public class ReservaData<T> {
         return cliente;
     }
 
-    public void setCliente(ClienteData cliente) {
-        this.cliente = cliente;
-    }
-
     public LocalDate getFechaInicio() {
         return fechaInicio;
     }
@@ -51,23 +47,11 @@ public class ReservaData<T> {
         return fechaFin;
     }
 
-    public void setFechaFin(LocalDate fechaFin) {
-        this.fechaFin = fechaFin;
-    }
-
-    public LocalTime getHoraLlegada() {
-        return horaLlegada;
-    }
-
-    public void setHoraLlegada(LocalTime horaLlegada) {
-        this.horaLlegada = horaLlegada;
-    }
-
     public List<Habitacion> getHabitacionesReservadas() {
         return habitacionesReservadas;
     }
 
-    public void setHabitacionesReservadas(List<Habitacion> habitacionesReservadas) {
-        this.habitacionesReservadas = habitacionesReservadas;
+    public LocalTime getHoraLlegada() {
+        return horaLlegada;
     }
 }

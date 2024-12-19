@@ -92,20 +92,4 @@ public class Hotel extends Alojamiento implements IDiaDeSol{
         return diaDeSol.getPrecioPorPersona() * cantPersonas;
     }
 
-    //Getters y Setters
-    public DiaDeSolData getDiaDeSol() {
-        return diaDeSol;
-    }
-
-    public void setDiaDeSol(DiaDeSolData diaDeSol) {
-        this.diaDeSol = diaDeSol;
-    }
-
-    public Boolean getServicioHabitacion() {
-        return servicioHabitacion;
-    }
-
-    public void setServicioHabitacion(Boolean servicioHabitacion) {
-        this.servicioHabitacion = servicioHabitacion;
-    }
 }

@@ -27,15 +27,9 @@ public class DiaDeSolData {
         return extras;
     }
 
-    public void setExtras(List<String> extras) {
-        this.extras = extras;
-    }
 
     public Float getPrecioPorPersona() {
         return precioPorPersona;
     }
 
-    public void setPrecioPorPersona(Float precioPorPersona) {
-        this.precioPorPersona = precioPorPersona;
-    }
 }
