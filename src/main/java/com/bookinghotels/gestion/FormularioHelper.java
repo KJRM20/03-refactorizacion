@@ -60,9 +60,9 @@ public class FormularioHelper {
         String alojamiento = teclado.nextLine();
         datosDeConfirmacion.put("nombreAlojamiento", alojamiento);
         List<Habitacion> habitacionesDisponibles= filtroDeHabitacion.confirmarAlojamiento(alojamientos, alojamiento, fechaInicio, fechaFin, reservaImplementation.getReservasData());
-        System.out.println("\nSelecciona cuántas habitaciones deseas reservar para cada tipo:\n");
         Map<String, List<Habitacion>> habitacionesSeleccionadas = new HashMap<>();
         if (habitacionesDisponibles != null) {
+            System.out.println("\nSelecciona cuántas habitaciones deseas reservar para cada tipo:\n");
             int habitacionesTotalesSeleccionadas = 0;
             for (Habitacion habitacion : habitacionesDisponibles) {
                 if (habitacionesTotalesSeleccionadas >= cantHabitaciones) {
@@ -88,7 +88,6 @@ public class FormularioHelper {
             }
             datosDeConfirmacion.put("habitacionesSeleccionadas", habitacionesSeleccionadas);
         }
-        System.out.println("\nHabitaciones seleccionadas: " + habitacionesSeleccionadas);
         return datosDeConfirmacion;
     }
 

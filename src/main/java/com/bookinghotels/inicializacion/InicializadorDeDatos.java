@@ -86,10 +86,10 @@ public class InicializadorDeDatos {
                 }}, 40000.0f));
         alojamientos.add(finca3);
 
-        Finca finca4 = new Finca("Finca El Paraíso", "Quindío", 4.5f, 5, 0, 750000.0f, null);
+        Finca finca4 = new Finca("Finca El Paraíso", "Quindío", 4.5f, 10, 5, 750000.0f, null);
         alojamientos.add(finca4);
 
-        Finca finca5 = new Finca("Finca Los Lagos", "Cali", 4.6f, 3, 0, 650000.0f,
+        Finca finca5 = new Finca("Finca Los Lagos", "Cali", 4.6f, 8, 3, 650000.0f,
                 new DiaDeSolData("kayak, pesca", new ArrayList<String>() {{
                     add("Cena");
                 }}, 35000.0f));
