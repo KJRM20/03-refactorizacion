@@ -3,6 +3,7 @@ package com.bookinghotels.logicaNegocio;
 import com.bookinghotels.modelos.Alojamiento;
 import com.bookinghotels.modelos.Hotel;
 import com.bookinghotels.modelos.IDiaDeSol;
+import com.bookinghotels.modelos.ReservaData;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.Map;
 
 public class FiltroDeAlojamientos {
 
-    public boolean buscarAlojamientos(List<Alojamiento> alojamientos, Map<String, Object> parametrosBusqueda) {
+    public boolean buscarAlojamientos(List<Alojamiento> alojamientos, List<ReservaData> reservas, Map<String, Object> parametrosBusqueda) {
         boolean hayResultados = false;
         String categoria = (String) parametrosBusqueda.get("categoria");
         String ciudad = (String) parametrosBusqueda.get("ciudad");
@@ -22,7 +23,7 @@ public class FiltroDeAlojamientos {
         LocalDate fechaFin = (LocalDate) parametrosBusqueda.get("fechaFin");
 
         for (Alojamiento alojamiento : alojamientos) {
-            if (alojamiento.estaDisponible(fechaInicio, fechaFin, cantPersonas, cantHabitaciones)
+            if (alojamiento.estaDisponible(fechaInicio, fechaFin, cantPersonas, cantHabitaciones, reservas)
                     && alojamiento.getCiudad().equalsIgnoreCase(ciudad)
                     && alojamiento.getCategoria().equalsIgnoreCase(categoria)) {
                 alojamiento.mostrarInformacion(fechaInicio, fechaFin, cantPersonas, cantHabitaciones);

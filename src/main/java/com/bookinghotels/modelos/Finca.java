@@ -2,6 +2,7 @@ package com.bookinghotels.modelos;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 public class Finca extends Alojamiento implements IDiaDeSol{
     private DiaDeSolData diaDeSol;
@@ -16,10 +17,10 @@ public class Finca extends Alojamiento implements IDiaDeSol{
 
     // Métodos
     @Override
-    public boolean estaDisponible(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones) {
-        int maxCapacidad = maxAdultos + maxNinos;
-        if(cantPersonas > maxCapacidad){
-            return false;
+    public boolean estaDisponible(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones, List<ReservaData> reservas) {
+        if (cantPersonas > (maxAdultos + maxNinos)) return false;
+        for (ReservaData reserva : reservas) {
+            if (!(fechaFin.isBefore(reserva.getFechaInicio()) || fechaInicio.isAfter(reserva.getFechaFin()))) return false;
         }
         return true;
     }

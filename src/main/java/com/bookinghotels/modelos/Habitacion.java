@@ -1,5 +1,6 @@
 package com.bookinghotels.modelos;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Habitacion {
@@ -27,8 +28,17 @@ public class Habitacion {
         System.out.println("+-------------------------------+");
     }
 
-    public boolean estaDisponible(){
-        return true;
+    public boolean estaDisponible(LocalDate fechaInicio, LocalDate fechaFin, List<ReservaData> reservas){
+        int habitacionesOcupadas = 0;
+        for (ReservaData reserva : reservas) {
+            List<Habitacion> habitacionesReservadas =  reserva.getHabitacionesReservadas();
+            for(Habitacion habitacion : habitacionesReservadas){
+                if(habitacion.getTipo().equalsIgnoreCase(tipo)){
+                    habitacionesOcupadas++;
+                }
+            }
+        }
+        return habitacionesOcupadas < habitacionesDisponibles;
     }
 
     // Getters y Setters

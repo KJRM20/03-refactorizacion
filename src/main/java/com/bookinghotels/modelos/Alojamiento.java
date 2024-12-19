@@ -27,7 +27,7 @@ public abstract class Alojamiento {
     }
 
     // Métodos abstractos
-    public abstract  boolean estaDisponible(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones);
+    public abstract  boolean estaDisponible(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones, List<ReservaData> reservas);
     public abstract float calcularPrecioBase(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones);
 
     // Métodos concretos

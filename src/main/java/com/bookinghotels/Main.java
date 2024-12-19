@@ -4,8 +4,6 @@ import com.bookinghotels.logicaNegocio.FiltroDeAlojamientos;
 import com.bookinghotels.logicaNegocio.FiltroDeHabitacion;
 import com.bookinghotels.logicaNegocio.ReservaImplementation;
 import com.bookinghotels.modelos.*;
-
-import java.security.spec.RSAOtherPrimeInfo;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
@@ -174,11 +172,10 @@ public class Main {
                 : 0;
         parametrosBusqueda.put("cantHabitaciones", cantHabitaciones);
 
-        System.out.println(parametrosBusqueda);
         return parametrosBusqueda;
     }
 
-    public static Map<String, Object> formularioConfirmarAlojamiento(FiltroDeHabitacion filtroDeHabitacion, int cantHabitaciones){
+    public static Map<String, Object> formularioConfirmarAlojamiento(FiltroDeHabitacion filtroDeHabitacion, int cantHabitaciones, LocalDate fechaInicio, LocalDate fechaFin){
         Scanner teclado = new Scanner(System.in);
         Map<String,Object> datosDeConfirmacion = new HashMap<>();
 
@@ -186,7 +183,7 @@ public class Main {
         System.out.println("Escribe el nombre del alojamiento en que deseas realizar la reserva: ");
         String alojamiento = teclado.nextLine();
         datosDeConfirmacion.put("nombreAlojamiento", alojamiento);
-        List<Habitacion> habitacionesDisponibles= filtroDeHabitacion.confirmarAlojamiento(alojamientos, alojamiento);
+        List<Habitacion> habitacionesDisponibles= filtroDeHabitacion.confirmarAlojamiento(alojamientos, alojamiento, fechaInicio, fechaFin, reservaImplementation.getReservasData());
         System.out.println("\nSelecciona cuántas habitaciones deseas reservar para cada tipo:\n");
         Map<String, List<Habitacion>> habitacionesSeleccionadas = new HashMap<>();
         if (habitacionesDisponibles != null) {
@@ -213,8 +210,9 @@ public class Main {
                     habitacionesSeleccionadas.get(habitacion.getTipo()).add(habitacion);
                 }
             }
-            datosDeConfirmacion.put("HabitacionesSeleccionadas", habitacionesSeleccionadas);
+            datosDeConfirmacion.put("habitacionesSeleccionadas", habitacionesSeleccionadas);
         }
+        System.out.println("Datos de confirmacion: " + datosDeConfirmacion);
         return datosDeConfirmacion;
     }
 
@@ -248,7 +246,7 @@ public class Main {
         return datosAValidar;
     }
 
-    public static Map<String, String> formularioModificarReserva(Alojamiento alojamiento) {
+    public static Map<String, String> formularioModificarReserva(Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin) {
         Scanner teclado = new Scanner(System.in);
         Map<String, String> datosActualizar = new HashMap<>();
 
@@ -266,13 +264,13 @@ public class Main {
             String antiguaHabitacion = obtenerEntrada("Indica el tipo de habitación que deseas cambiar (ejemplo: 'Suite'): ", teclado);
 
             System.out.println("\nHabitaciones disponibles: ");
-            List<Habitacion> habitacionesDisponibles = filtroDeHabitacion.confirmarAlojamiento(alojamientos, alojamiento.getNombre());
+            List<Habitacion> habitacionesDisponibles = filtroDeHabitacion.confirmarAlojamiento(alojamientos, alojamiento.getNombre(), fechaInicio, fechaFin, reservaImplementation.getReservasData());
 
-            habitacionesDisponibles.forEach(h -> System.out.println(h.getTipo() + (h.estaDisponible() ? " (Disponible)" : " (No Disponible)")));
+            habitacionesDisponibles.forEach(h -> System.out.println(h.getTipo() + (h.estaDisponible(fechaInicio, fechaFin, reservaImplementation.getReservasData()) ? " (Disponible)" : " (No Disponible)")));
 
             String nuevaHabitacion = obtenerEntrada("Selecciona el nuevo tipo de habitación: ", teclado);
             boolean habitacionValida = habitacionesDisponibles.stream()
-                    .anyMatch(h -> h.getTipo().equalsIgnoreCase(nuevaHabitacion) && h.estaDisponible());
+                    .anyMatch(h -> h.getTipo().equalsIgnoreCase(nuevaHabitacion) && h.estaDisponible(fechaInicio, fechaFin, reservaImplementation.getReservasData()));
 
             if (habitacionValida) {
                 datosActualizar.put("antiguaHabitacion", antiguaHabitacion);
@@ -290,8 +288,10 @@ public class Main {
         Scanner teclado = new Scanner(System.in);
         FiltroDeAlojamientos filtroDeAlojamientos = new FiltroDeAlojamientos();
         Map<String, Object> parametrosBusqueda = formularioBuscarAlojamientos(teclado);
+        LocalDate fechaInicio = (LocalDate) parametrosBusqueda.get("fechaInicio");
+        LocalDate fechaFin = (LocalDate) parametrosBusqueda.get("fechaFin");
 
-        if (!filtroDeAlojamientos.buscarAlojamientos(alojamientos, parametrosBusqueda)) {
+        if (!filtroDeAlojamientos.buscarAlojamientos(alojamientos, reservaImplementation.getReservasData(), parametrosBusqueda)) {
             System.out.println("\nNo se han encontrado resultados a la búsqueda.");
             return;
         }
@@ -299,7 +299,8 @@ public class Main {
         if (continuarProceso("¿Deseas hacer una reservación?")) {
             Map<String, Object> datosAlojamientoReserva = formularioConfirmarAlojamiento(
                     new FiltroDeHabitacion(),
-                    (int) parametrosBusqueda.get("cantHabitaciones")
+                    (int) parametrosBusqueda.get("cantHabitaciones"),
+                    fechaInicio, fechaFin
             );
 
             if (continuarProceso("¿Confirmas la selección?")) {
@@ -323,7 +324,7 @@ public class Main {
             reservaImplementation.mostrarReserva(datosAValidar.get("correo"), fechaNacimiento);
             Alojamiento alojamiento = (Alojamiento) reserva.getAlojamiento();
 
-            Map<String, String> datosActualizar = formularioModificarReserva(alojamiento);
+            Map<String, String> datosActualizar = formularioModificarReserva(alojamiento, reserva.getFechaInicio(), reserva.getFechaFin());
 
             switch (datosActualizar.get("opcion")) {
                 case "1":
@@ -355,7 +356,8 @@ public class Main {
         // Obtener lista de habitaciones
         List<Habitacion> listaHabitaciones = new ArrayList<>();
         Map<String, List<Habitacion>> habitacionesSeleccionadas =
-                (Map<String, List<Habitacion>>) datosCliente.get("HabitacionesSeleccionadas");
+                (Map<String, List<Habitacion>>) datosAlojamiento.get("habitacionesSeleccionadas");
+        System.out.println("Lista de habitaciones seleccionadas en reserva: " + habitacionesSeleccionadas);
         if (habitacionesSeleccionadas != null) {
             habitacionesSeleccionadas.values().forEach(listaHabitaciones::addAll);
         }
@@ -383,7 +385,7 @@ public class Main {
             }
         }
 
-        if (antiguaHabitacion != null && nuevaHabitacion != null && nuevaHabitacion.estaDisponible()) {
+        if (antiguaHabitacion != null && nuevaHabitacion != null && nuevaHabitacion.estaDisponible(reserva.getFechaInicio(), reserva.getFechaFin(), reservaImplementation.getReservasData())) {
             reservaImplementation.actualizarReserva(
                     reserva.getCliente().getCorreo(),
                     reserva.getCliente().getFechaNacimiento(),
