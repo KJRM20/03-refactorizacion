@@ -20,7 +20,6 @@ public class FiltroDeAlojamientos {
         int cantHabitaciones = (int) parametrosBusqueda.get("cantHabitaciones");
         LocalDate fechaInicio = (LocalDate) parametrosBusqueda.get("fechaInicio");
         LocalDate fechaFin = (LocalDate) parametrosBusqueda.get("fechaFin");
-        System.out.println("Tamaño de la lista de alojamientos: " + alojamientos.size());
 
         for (Alojamiento alojamiento : alojamientos) {
             if (alojamiento.estaDisponible(fechaInicio, fechaFin, cantPersonas, cantHabitaciones)
@@ -42,5 +41,12 @@ public class FiltroDeAlojamientos {
         return  hayResultados;
     }
 
-
+    public Alojamiento buscarAlojamientoPorNombre(List<Alojamiento> alojamientos, String nombre){
+        for(Alojamiento alojamiento : alojamientos){
+            if(alojamiento.getNombre().equalsIgnoreCase(nombre)){
+                return alojamiento;
+            }
+        }
+        return null;
+    }
 }

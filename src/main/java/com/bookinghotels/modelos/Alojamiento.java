@@ -29,9 +29,17 @@ public abstract class Alojamiento {
     // Métodos abstractos
     public abstract  boolean estaDisponible(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones);
     public abstract float calcularPrecioBase(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones);
-    //public abstract void mostrarInformacion(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones);
 
     // Métodos concretos
+    public void mostrarInformacion(){
+        System.out.println("\n+--------------- " + nombre + " ---------------+");
+        System.out.println("Calificación: " + calificacion );
+        if (descripcion != null){
+            System.out.println("Descripción: " + calificacion );
+        }
+        System.out.println("+---------------------------------------------+");
+    }
+
     public void mostrarInformacion(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones) {
         System.out.println("\n+--------------- " + nombre + " ---------------+");
         System.out.println("Calificación: " + calificacion );

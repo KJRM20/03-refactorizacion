@@ -1,15 +1,17 @@
 package com.bookinghotels;
 
 import com.bookinghotels.logicaNegocio.FiltroDeAlojamientos;
+import com.bookinghotels.logicaNegocio.FiltroDeHabitacion;
 import com.bookinghotels.logicaNegocio.ReservaImplementation;
 import com.bookinghotels.modelos.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 public class Main {
     private static List<Alojamiento> alojamientos = new ArrayList<>();
-    private ReservaImplementation reservaImplementation = new ReservaImplementation();
+    private static ReservaImplementation reservaImplementation = new ReservaImplementation();
 
     public static void main(String[] args) {
         inizializarDatos();
@@ -195,22 +197,114 @@ public class Main {
         return parametrosBusqueda;
     }
 
+    public static Map<String, Object> formularioConfirmarAlojamiento(FiltroDeHabitacion filtroDeHabitacion, int cantHabitaciones){
+        Scanner teclado = new Scanner(System.in);
+        Map<String,Object> datosDeConfirmacion = new HashMap<>();
+
+        System.out.println("\n*------------------ Confirmar el Alojamiento --------------*");
+        System.out.println("Escribe el nombre del alojamiento en que deseas realizar la reserva: ");
+        String alojamiento = teclado.nextLine();
+        List<Habitacion> habitacionesDisponibles= filtroDeHabitacion.confirmarAlojamiento(alojamientos, alojamiento);
+        System.out.println("\nSelecciona cuántas habitaciones deseas reservar para cada tipo:\n");
+        Map<String, List<Habitacion>> habitacionesSeleccionadas = new HashMap<>();
+        if (habitacionesDisponibles != null) {
+            int habitacionesTotalesSeleccionadas = 0;
+            for (Habitacion habitacion : habitacionesDisponibles) {
+                if (habitacionesTotalesSeleccionadas >= cantHabitaciones) {
+                    break;
+                }
+                System.out.print("¿Cuántas '" + habitacion.getTipo() + "' deseas reservar?: ");
+                int cantidad = teclado.nextInt();
+                teclado.nextLine();
+
+                if (habitacionesTotalesSeleccionadas + cantidad > cantHabitaciones) {
+                    System.out.println("\nHas seleccionado más habitaciones de las requeridas, se ajustará a lo establecido.");
+                    cantidad = cantHabitaciones - habitacionesTotalesSeleccionadas;
+                }
+
+                habitacionesTotalesSeleccionadas += cantidad;
+                if (!habitacionesSeleccionadas.containsKey(habitacion.getTipo())) {
+                    habitacionesSeleccionadas.put(habitacion.getTipo(), new ArrayList<>());
+                }
+
+                for (int i = 0; i < cantidad; i++) {
+                    habitacionesSeleccionadas.get(habitacion.getTipo()).add(habitacion);
+                }
+            }
+            datosDeConfirmacion.put("HabitacionesSeleccionadas", habitacionesSeleccionadas);
+        }
+        return datosDeConfirmacion;
+    }
+
     public static Map<String,Object> formularioHacerReserva(){
         Scanner teclado = new Scanner(System.in);
         Map<String,Object> datosDeReserva = new HashMap<>();
+        System.out.println("\n*----- Datos personales de la Reservación -----*");
+        System.out.println("Nombre: ");
+        String nombre = teclado.nextLine();
+        System.out.println("Apellido: ");
+        String apellido = teclado.nextLine();
+        System.out.println("Fecha de nacimiento (YYYY-MM-dd): ");
+        String fechaNacimiento = teclado.nextLine();
+        System.out.println("Correo electrónico: ");
+        String correo = teclado.nextLine();
+        System.out.println("Nacionalidad: ");
+        String nacionalidad = teclado.nextLine();
+        System.out.println("Número de teléfono: ");
+        String telefono = teclado.nextLine();
+        System.out.println("Hora de llegada (HH:mm): ");
+        String horaLlegada = teclado.nextLine();
+        datosDeReserva.put("horaLlegada", LocalTime.parse(horaLlegada));
 
-        System.out.println("\n*------------------ Iniciar la Reservación --------------*");
-        System.out.println("Escribe el nombre del alojamiento en que deseas realizar la reserva: ");
-        String alojamiento = teclado.nextLine();
+        ClienteData cliente = new ClienteData(nombre, apellido, LocalDate.parse(fechaNacimiento), telefono, correo, nacionalidad);
+        datosDeReserva.put("clienteData", cliente);
         return datosDeReserva;
     }
 
     public static void gestionarOpcionBuscarYReservar(){
         FiltroDeAlojamientos filtroDeAlojamientos = new FiltroDeAlojamientos();
         Map<String, Object> parametrosBusqueda= formularioBuscarAlojamientos();
-        boolean encontroResutlados = filtroDeAlojamientos.buscarAlojamientos(alojamientos,parametrosBusqueda);
-        if(!encontroResutlados){
+        Map<String, Object> datosAlojamientoReserva = new HashMap<>();
+        boolean encontroResultados = filtroDeAlojamientos.buscarAlojamientos(alojamientos,parametrosBusqueda);
+        if(!encontroResultados){
             System.out.println("\nNo se han encontrado resultados a la búsqueda.");
+        }else if(continuarProceso("¿Deseas hacer una reservación?")){
+            FiltroDeHabitacion filtroDeHabitacion= new FiltroDeHabitacion();
+            int cantHabitaciones = (int) parametrosBusqueda.get("cantHabitaciones");
+            datosAlojamientoReserva = formularioConfirmarAlojamiento(filtroDeHabitacion, cantHabitaciones);
         }
+        if(continuarProceso("¿Confirmas la selección?")){
+            Map<String, Object> datosClienteReserva = formularioHacerReserva();
+            ClienteData clienteData = (ClienteData) datosClienteReserva.get("clienteData");
+            String nombreAlojamiento = (String) datosAlojamientoReserva.get("nombreAlojamiento");
+            Alojamiento alojamiento = filtroDeAlojamientos.buscarAlojamientoPorNombre(alojamientos, nombreAlojamiento);
+            LocalDate fechaInicio = (LocalDate) datosAlojamientoReserva.get("fechaInicio");
+            LocalDate fechaFin = (LocalDate) datosAlojamientoReserva.get("fechaFin");
+            LocalTime horaLlegada = (LocalTime)  datosClienteReserva.get("horaLLegada");
+            Map<String, List<Habitacion>> habitacionesSeleccionadas = (Map<String, List<Habitacion>>) datosClienteReserva.get("HabitacionesSeleccionadas");
+
+            List<Habitacion> listaHabitacionesSeleccionadas = new ArrayList<>();
+            if (habitacionesSeleccionadas != null) {
+                for (List<Habitacion> habitaciones : habitacionesSeleccionadas.values()) {
+                    listaHabitacionesSeleccionadas.addAll(habitaciones);
+                }
+            }
+            ReservaData reserva = new ReservaData(alojamiento, clienteData, fechaInicio, fechaFin, horaLlegada, listaHabitacionesSeleccionadas);
+            reservaImplementation.agregarReserva(reserva);
+            System.out.println("Se ha realizado la reserva con éxito!");
+        }else{
+            System.out.println("\nProceso de reserva cancelado.");
+        }
+        System.out.println("Serás redirigido(a) al menú principal. Espera un momento...");
+    }
+
+    public static boolean continuarProceso(String mensaje){
+        Scanner teclado = new Scanner(System.in);
+        System.out.println( "\n" + mensaje + " (Si - No): ");
+        String respuesta = teclado.nextLine();
+        if(respuesta.equalsIgnoreCase("Si")){
+            return true;
+        }
+        return false;
     }
 }
