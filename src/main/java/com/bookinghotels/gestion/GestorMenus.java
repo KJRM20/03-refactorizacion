@@ -14,7 +14,16 @@ public class GestorMenus {
         System.out.println("*----------------------------------------------------*\n");
     }
 
+    public void  mostrarLogo(){
+        System.out.println("\n         ___|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|___    ");
+        System.out.println("        |                                     |    ");
+        System.out.println("        |      Bienvenido(a) a Book Stay      |    ");
+        System.out.println("        |_____________________________________|    ");
+        System.out.println("               |     |     |     |     |          \n");
+    }
+
     public void gestionarOpciones() {
+        mostrarLogo();
         Scanner teclado = new Scanner(System.in);
         boolean salir = false;
         while (!salir) {
@@ -24,7 +33,7 @@ public class GestorMenus {
             switch (opcion) {
                 case 0 -> salir = true;
                 case 1 -> Main.gestionarOpcionBuscarYReservar();
-                case 2 -> System.out.println("Consultar reservaciones. (Funcionalidad en desarrollo)");
+                case 2 -> Main.gestionarOpcionConsultarReserva();
                 case 3 -> Main.gestionarOpcionModificarReserva();
                 default -> System.out.println("\nOpción no válida, intenta nuevamente.");
             }

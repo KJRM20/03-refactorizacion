@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
+import static com.bookinghotels.gestion.FormularioHelper.*;
 import static com.bookinghotels.utilidades.InputUtilidades.*;
 
 public class Main {
@@ -20,7 +21,6 @@ public class Main {
 
     public static void main(String[] args) {
         inicializarDatos();
-        mostrarLogo();
         gestionarMenu();
     }
 
@@ -28,168 +28,14 @@ public class Main {
         alojamientos = InicializadorDeDatos.cargarDatosIniciales();
     }
 
-    public static void  mostrarLogo(){
-        System.out.println("\n         ___|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|___    ");
-        System.out.println("        |                                     |    ");
-        System.out.println("        |      Bienvenido(a) a Book Stay      |    ");
-        System.out.println("        |_____________________________________|    ");
-        System.out.println("               |     |     |     |     |          \n");
-    }
-
-    public static void mostrarMenu(){
-        System.out.println("\n*----------------------- Menú -----------------------*");
-        System.out.println("| 1. Buscar y reservar alojamiento.                  | ");
-        System.out.println("| 2. Consultar reservaciones realizadas.             | ");
-        System.out.println("| 3. Modificar una reservación.                      | ");
-        System.out.println("| 0. Salir.                                          | ");
-        System.out.println("*----------------------------------------------------*\n");
-    }
-
     public static void gestionarMenu(){
         new GestorMenus().gestionarOpciones();
-    }
-
-    public static ParametrosBusqueda formularioBuscarAlojamientos(Scanner teclado) {
-        ParametrosBusqueda parametrosBusqueda = new ParametrosBusqueda();
-        System.out.println("\n*------------------ Buscar Alojamiento --------------*");
-        parametrosBusqueda.setCiudad(obtenerEntrada("¿A cuál ciudad deseas ir?", teclado));
-        String categoria = obtenerEntrada("¿Qué tipo de alojamiento buscas?", teclado);
-        parametrosBusqueda.setCategoria(categoria);
-
-        String fechaInicio = obtenerEntrada(
-                categoria.equalsIgnoreCase("Día de Sol")
-                        ? "Escribe el día de la estadía (YYYY-MM-dd):"
-                        : "Escribe el día inicial de la estadía (YYYY-MM-dd):",
-                teclado);
-        parametrosBusqueda.setFechaInicio(parseFecha(fechaInicio));
-
-        String fechaFin = categoria.equalsIgnoreCase("Día de Sol")
-                ? fechaInicio
-                : obtenerEntrada("Escribe el día final de la estadía (YYYY-MM-dd):", teclado);
-        parametrosBusqueda.setFechaFin(parseFecha(fechaFin));
-        int adultos = obtenerEntero("Cantidad de adultos:", teclado);
-        int ninos = obtenerEntero("Cantidad de niños:", teclado);
-
-        parametrosBusqueda.setCantPersonas(adultos + ninos);
-
-        int cantHabitaciones = categoria.equalsIgnoreCase("Hotel")
-                ? obtenerEntero("Cantidad de habitaciones:", teclado)
-                : 0;
-        parametrosBusqueda.setCantHabitaciones(cantHabitaciones);
-        return parametrosBusqueda;
-    }
-
-    public static Map<String, Object> formularioConfirmarAlojamiento(FiltroDeHabitacion filtroDeHabitacion, int cantHabitaciones, LocalDate fechaInicio, LocalDate fechaFin){
-        Scanner teclado = new Scanner(System.in);
-        Map<String,Object> datosDeConfirmacion = new HashMap<>();
-
-        System.out.println("\n*------------------ Confirmar el Alojamiento --------------*");
-        System.out.println("Escribe el nombre del alojamiento en que deseas realizar la reserva: ");
-        String alojamiento = teclado.nextLine();
-        datosDeConfirmacion.put("nombreAlojamiento", alojamiento);
-        List<Habitacion> habitacionesDisponibles= filtroDeHabitacion.confirmarAlojamiento(alojamientos, alojamiento, fechaInicio, fechaFin, reservaImplementation.getReservasData());
-        System.out.println("\nSelecciona cuántas habitaciones deseas reservar para cada tipo:\n");
-        Map<String, List<Habitacion>> habitacionesSeleccionadas = new HashMap<>();
-        if (habitacionesDisponibles != null) {
-            int habitacionesTotalesSeleccionadas = 0;
-            for (Habitacion habitacion : habitacionesDisponibles) {
-                if (habitacionesTotalesSeleccionadas >= cantHabitaciones) {
-                    break;
-                }
-                System.out.print("¿Cuántas '" + habitacion.getTipo() + "' deseas reservar?: ");
-                int cantidad = teclado.nextInt();
-                teclado.nextLine();
-
-                if (habitacionesTotalesSeleccionadas + cantidad > cantHabitaciones) {
-                    System.out.println("\nHas seleccionado más habitaciones de las requeridas, se ajustará a lo establecido.");
-                    cantidad = cantHabitaciones - habitacionesTotalesSeleccionadas;
-                }
-
-                habitacionesTotalesSeleccionadas += cantidad;
-                if (!habitacionesSeleccionadas.containsKey(habitacion.getTipo())) {
-                    habitacionesSeleccionadas.put(habitacion.getTipo(), new ArrayList<>());
-                }
-
-                for (int i = 0; i < cantidad; i++) {
-                    habitacionesSeleccionadas.get(habitacion.getTipo()).add(habitacion);
-                }
-            }
-            datosDeConfirmacion.put("habitacionesSeleccionadas", habitacionesSeleccionadas);
-        }
-        System.out.println("\nHabitaciones seleccionadas: " + habitacionesSeleccionadas);
-        return datosDeConfirmacion;
-    }
-
-    public static Map<String, Object> formularioHacerReserva(Scanner teclado) {
-        Map<String, Object> datosDeReserva = new HashMap<>();
-        System.out.println("\n*----- Datos personales de la Reservación -----*");
-
-        ClienteData cliente = new ClienteData(
-                obtenerEntrada("Nombre:", teclado),
-                obtenerEntrada("Apellido:", teclado),
-                parseFecha(obtenerEntrada("Fecha de nacimiento (YYYY-MM-dd):", teclado)),
-                obtenerEntrada("Número de teléfono:", teclado),
-                obtenerEntrada("Correo electrónico:", teclado),
-                obtenerEntrada("Nacionalidad:", teclado)
-        );
-
-        datosDeReserva.put("clienteData", cliente);
-        datosDeReserva.put("horaLlegada",
-                parseHora(obtenerEntrada("Hora de llegada (HH:mm):", teclado)));
-
-        return datosDeReserva;
-    }
-
-    public static Map<String, String> formularioValidarDatos() {
-        Scanner teclado = new Scanner(System.in);
-        Map<String, String> datosAValidar = new HashMap<>();
-
-        datosAValidar.put("correo", obtenerEntrada("Ingresa tu correo electrónico: ", teclado));
-        datosAValidar.put("fechaNacimiento", obtenerEntrada("Ingresa tu fecha de nacimiento (YYYY-MM-dd): ", teclado));
-
-        return datosAValidar;
-    }
-
-    public static Map<String, String> formularioModificarReserva(Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin) {
-        Scanner teclado = new Scanner(System.in);
-        Map<String, String> datosActualizar = new HashMap<>();
-
-        System.out.println("\n¿Qué deseas modificar?");
-        if (alojamiento instanceof Hotel) {
-            System.out.println("1. Cambio de habitación");
-        }
-        System.out.println("2. Cambio de alojamiento");
-        System.out.println("3. Cancelar operación");
-        int opcion = obtenerEntero("Selecciona una opción (1, 2, 3): ", teclado);
-        datosActualizar.put("opcion", String.valueOf(opcion));
-
-        if (opcion == 1 && alojamiento instanceof Hotel) {
-            FiltroDeHabitacion filtroDeHabitacion = new FiltroDeHabitacion();
-            String antiguaHabitacion = obtenerEntrada("Indica el tipo de habitación que deseas cambiar (ejemplo: 'Suite'): ", teclado);
-
-            System.out.println("\nHabitaciones disponibles: ");
-            List<Habitacion> habitacionesDisponibles = filtroDeHabitacion.confirmarAlojamiento(alojamientos, alojamiento.getNombre(), fechaInicio, fechaFin, reservaImplementation.getReservasData());
-
-            String nuevaHabitacion = obtenerEntrada("Selecciona el nuevo tipo de habitación: ", teclado);
-            boolean habitacionValida = habitacionesDisponibles.stream()
-                    .anyMatch(h -> h.getTipo().equalsIgnoreCase(nuevaHabitacion) && h.estaDisponible(fechaInicio, fechaFin, reservaImplementation.getReservasData()));
-
-            if (habitacionValida) {
-                datosActualizar.put("antiguaHabitacion", antiguaHabitacion);
-                datosActualizar.put("nuevaHabitacion", nuevaHabitacion);
-            } else {
-                System.out.println("La nueva habitación seleccionada no es válida o no está disponible.");
-                datosActualizar.put("opcion", "3");
-            }
-        }
-
-        return datosActualizar;
     }
 
     public static void gestionarOpcionBuscarYReservar() {
         Scanner teclado = new Scanner(System.in);
         FiltroDeAlojamientos filtroDeAlojamientos = new FiltroDeAlojamientos();
-        ParametrosBusqueda parametrosBusqueda = formularioBuscarAlojamientos(teclado);
+        ParametrosBusqueda parametrosBusqueda = formularioBuscarAlojamientos();
 
         if (!filtroDeAlojamientos.buscarAlojamientos(alojamientos, reservaImplementation.getReservasData(), parametrosBusqueda)) {
             System.out.println("\nNo se han encontrado resultados a la búsqueda.");
@@ -204,7 +50,7 @@ public class Main {
             );
 
             if (continuarProceso("¿Confirmas la selección?")) {
-                Map<String, Object> datosClienteReserva = formularioHacerReserva(teclado);
+                Map<String, Object> datosClienteReserva = formularioHacerReserva();
                 crearReserva(datosAlojamientoReserva, datosClienteReserva);
             } else {
                 System.out.println("\nProceso de reserva cancelado.");
@@ -215,11 +61,11 @@ public class Main {
 
     public static void gestionarOpcionModificarReserva() {
         System.out.println("\n*-------------------- Modificar Reservación ----------------*");
-        Map<String, String> datosAValidar = formularioValidarDatos();
+        Map<String, String> datosAValidar =  formularioValidarDatos();
 
         try {
             LocalDate fechaNacimiento = parseFecha(datosAValidar.get("fechaNacimiento"));
-            ReservaData reserva = (ReservaData) reservaImplementation.obtenerReserva(datosAValidar.get("correo"), fechaNacimiento);
+            ReservaData reserva = reservaImplementation.obtenerReserva(datosAValidar.get("correo"), fechaNacimiento);
 
             reservaImplementation.mostrarReserva(datosAValidar.get("correo"), fechaNacimiento);
             Alojamiento alojamiento = (Alojamiento) reserva.getAlojamiento();
@@ -247,13 +93,20 @@ public class Main {
         System.out.println("Serás redirigido(a) al menú principal. Espera un momento...");
     }
 
+    public static void gestionarOpcionConsultarReserva(){
+        System.out.println("\n*-------------------- Consultar Reservación ----------------*");
+        Map<String, String> datosAValidar =  formularioValidarDatos();
+        LocalDate fechaNacimiento = parseFecha(datosAValidar.get("fechaNacimiento"));
+        ReservaData reserva = reservaImplementation.obtenerReserva(datosAValidar.get("correo"), fechaNacimiento);
+        reservaImplementation.mostrarReserva(datosAValidar.get("correo"), fechaNacimiento);
+    }
+
     private static void crearReserva(Map<String, Object> datosAlojamiento, Map<String, Object> datosCliente) {
         ClienteData clienteData = (ClienteData) datosCliente.get("clienteData");
         LocalDate fechaInicio = (LocalDate) datosAlojamiento.get("fechaInicio");
         LocalDate fechaFin = (LocalDate) datosAlojamiento.get("fechaFin");
         LocalTime horaLlegada = (LocalTime) datosCliente.get("horaLlegada");
 
-        // Obtener lista de habitaciones
         List<Habitacion> listaHabitaciones = new ArrayList<>();
         Map<String, List<Habitacion>> habitacionesSeleccionadas =
                 (Map<String, List<Habitacion>>) datosAlojamiento.get("habitacionesSeleccionadas");
@@ -297,14 +150,12 @@ public class Main {
         }
     }
 
-    public static boolean continuarProceso(String mensaje){
-        Scanner teclado = new Scanner(System.in);
-        System.out.println( "\n" + mensaje + " (Si - No): ");
-        String respuesta = teclado.nextLine();
-        if(respuesta.equalsIgnoreCase("Si")){
-            return true;
-        }
-        return false;
+    //Getters
+    public static List<Alojamiento> getAlojamientos() {
+        return new ArrayList<>(alojamientos);
     }
-    
+
+    public static ReservaImplementation getReservaImplementation() {
+        return reservaImplementation;
+    }
 }
