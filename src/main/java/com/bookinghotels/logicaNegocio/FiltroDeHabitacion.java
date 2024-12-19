@@ -12,8 +12,10 @@ public class FiltroDeHabitacion {
             for(Alojamiento alojamiento : alojamientos){
                 if(alojamiento.getNombre().equalsIgnoreCase(nombreAlojamiento) && (alojamiento.getCategoria().equalsIgnoreCase("Hotel"))){
                     return confirmarHabitaciones(alojamiento);
+                }else if(alojamiento.getNombre().equalsIgnoreCase(nombreAlojamiento)){
+                    alojamiento.mostrarInformacion();
+                    break;
                 }
-                alojamiento.mostrarInformacion();
             }
         return null;
     }

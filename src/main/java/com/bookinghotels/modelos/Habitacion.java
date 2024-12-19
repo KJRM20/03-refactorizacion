@@ -28,7 +28,7 @@ public class Habitacion {
     }
 
     public boolean estaDisponible(){
-        return false;
+        return true;
     }
 
     // Getters y Setters
