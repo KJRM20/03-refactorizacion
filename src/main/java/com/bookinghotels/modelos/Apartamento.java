@@ -10,7 +10,7 @@ public class Apartamento extends Alojamiento{
 
     // Constructores
     public Apartamento(String nombre, String ciudad, Float calificacion, Integer maxAdultos, Integer maxNinos, Float precioPorNoche, Integer piso, String numeroApartamento) {
-        super(nombre, ciudad, calificacion, maxAdultos, maxNinos);
+        super(nombre, ciudad, "Apartamento",calificacion, maxAdultos, maxNinos);
         this.piso = piso;
         this.numeroApartamento = numeroApartamento;
         this.precioPorNoche = precioPorNoche;
@@ -19,7 +19,11 @@ public class Apartamento extends Alojamiento{
     // Métodos
     @Override
     public boolean estaDisponible(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones) {
-        return false;
+        int maxCapacidad = maxAdultos + maxNinos;
+        if(cantPersonas > maxCapacidad){
+            return false;
+        }
+        return true;
     }
 
     @Override

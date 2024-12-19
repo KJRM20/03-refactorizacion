@@ -1,10 +1,10 @@
 package com.bookinghotels;
 
+import com.bookinghotels.logicaNegocio.FiltroDeAlojamientos;
 import com.bookinghotels.modelos.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.util.*;
 
 public class Main {
     private static List<Alojamiento> alojamientos;
@@ -61,7 +61,7 @@ public class Main {
                     System.out.println("\n¡Gracias por usar nuestros servicios!\n");
                     return;
                 case 1:
-                    System.out.println("Buscar");
+                    gestionarOpcionBuscarYReservar();
                 case 2:
                     System.out.println("Consultar");
                 case 3:
@@ -72,5 +72,65 @@ public class Main {
         } while (true);
     }
 
+    public static Map<String,Object> formularioBuscarAlojamientos(){
+        Scanner teclado = new Scanner(System.in);
+        Map<String,Object> parametrosBusqueda = new HashMap<>();
 
+        System.out.println("\n*------------------ Buscar Alojamiento --------------*");
+        System.out.println("¿A cuál ciudad deseas ir?: ");
+        parametrosBusqueda.put("ciudad", teclado.nextLine());
+        System.out.println("¿Qué tipo de alojamiento buscas?: ");
+        String categoria = teclado.nextLine();
+        parametrosBusqueda.put("categoria", categoria);
+
+        if (categoria.equalsIgnoreCase("Día de Sol")) {
+            System.out.println("Escribe el día de la estadía (YYYY-MM-dd): ");
+        } else {
+            System.out.println("Escribe el día inicial de la estadía (YYYY-MM-dd): ");
+        }
+        String fechaInicio = teclado.nextLine();
+        parametrosBusqueda.put("fechaInicio", LocalDate.parse(fechaInicio));
+        String fechaFin;
+
+        if (categoria.equalsIgnoreCase("Día de Sol")) {
+            fechaFin = fechaInicio;
+        } else {
+            System.out.println("Escribe el día final de la estadía (YYYY-MM-dd): ");
+            fechaFin = teclado.nextLine();
+        }
+        parametrosBusqueda.put("fechaFin", LocalDate.parse(fechaFin));
+        System.out.println("Cantidad de adultos: ");
+        parametrosBusqueda.put("adultos", teclado.nextInt());
+        teclado.nextLine();
+        System.out.println("Cantidad de niños: ");
+        parametrosBusqueda.put("ninos", teclado.nextInt());
+        teclado.nextLine();
+        int cantHabitaciones;
+        if (categoria.equalsIgnoreCase("Hotel")) {
+            System.out.println("Cantidad de habitaciones: ");
+            cantHabitaciones = teclado.nextInt();
+            teclado.nextLine();
+        } else {
+            cantHabitaciones = 0;
+        }
+        parametrosBusqueda.put("cantHabitaciones", teclado.nextInt());
+        return parametrosBusqueda;
+    }
+
+    public static Map<String,Object> formularioHacerReserva(){
+        Scanner teclado = new Scanner(System.in);
+        Map<String,Object> datosDeReserva = new HashMap<>();
+
+        System.out.println("\n*------------------ Iniciar la Reservación --------------*");
+        System.out.println("Escribe el nombre del alojamiento en que deseas realizar la reserva: ");
+        String alojamiento = teclado.nextLine();
+        return datosDeReserva;
+    }
+
+    public static void gestionarOpcionBuscarYReservar(){
+        FiltroDeAlojamientos filtroDeAlojamientos = new FiltroDeAlojamientos();
+        Map<String, Object> parametrosBusqueda= formularioBuscarAlojamientos();
+        filtroDeAlojamientos.buscarAlojamientos(alojamientos,parametrosBusqueda);
+
+    }
 }

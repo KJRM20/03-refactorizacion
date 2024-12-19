@@ -9,7 +9,7 @@ public class Hotel extends Alojamiento implements IDiaDeSol{
 
     // Constructor
     public Hotel(String nombre, String ciudad, Float calificacion, Integer maxAdultos, Integer maxNinos, DiaDeSolData diaDeSol, Boolean servicioHabitacion) {
-        super(nombre, ciudad, calificacion, maxAdultos, maxNinos);
+        super(nombre, ciudad, "Hotel", calificacion, maxAdultos, maxNinos);
         this.diaDeSol = diaDeSol;
         this.servicioHabitacion = servicioHabitacion;
     }
@@ -17,7 +17,15 @@ public class Hotel extends Alojamiento implements IDiaDeSol{
     //Métodos
     @Override
     public boolean estaDisponible(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones) {
-        return false;
+       int cantHabitacionesDisponibles = 0;
+       do{
+           for (Habitacion habitacion : habitaciones){
+               if(habitacion.estaDisponible()){
+                   ++cantHabitacionesDisponibles;
+               }
+           }
+       } while (cantHabitacionesDisponibles < cantHabitaciones);
+        return true;
     }
 
     @Override

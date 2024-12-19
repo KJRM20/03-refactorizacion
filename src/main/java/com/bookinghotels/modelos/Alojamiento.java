@@ -8,6 +8,7 @@ import java.util.List;
 public abstract class Alojamiento {
     protected String nombre;
     protected String ciudad;
+    protected String categoria;
     protected Float calificacion;
     protected String descripcion;
     protected Integer maxAdultos;
@@ -15,9 +16,10 @@ public abstract class Alojamiento {
     protected List<Habitacion> habitaciones;
 
     // Constructor
-    public Alojamiento(String nombre, String ciudad, Float calificacion, Integer maxAdultos, Integer maxNinos) {
+    public Alojamiento(String nombre, String ciudad, String categoria, Float calificacion, Integer maxAdultos, Integer maxNinos) {
         this.nombre = nombre;
         this.ciudad = ciudad;
+        this.categoria = categoria;
         this.calificacion = calificacion;
         this.maxAdultos = maxAdultos;
         this.maxNinos = maxNinos;
@@ -90,6 +92,14 @@ public abstract class Alojamiento {
 
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public Float getCalificacion() {
