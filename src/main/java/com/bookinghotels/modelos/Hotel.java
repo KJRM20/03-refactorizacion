@@ -1,5 +1,6 @@
 package com.bookinghotels.modelos;
 
+import javax.swing.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -17,7 +18,7 @@ public class Hotel extends Alojamiento implements IDiaDeSol{
 
     //Métodos
     @Override
-    public boolean estaDisponible(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, Integer cantHabitaciones, List<ReservaData> reservas) {
+    public boolean estaDisponible(LocalDate fechaInicio, LocalDate fechaFin, Integer cantPersonas, Integer cantHabitaciones, List<ReservaData> reservas) {
         int habitacionesDisponibles = 0;
         for (Habitacion habitacion : habitaciones) {
             if (habitacion.estaDisponible(fechaInicio, fechaFin, reservas)) {
@@ -31,7 +32,7 @@ public class Hotel extends Alojamiento implements IDiaDeSol{
     }
 
     @Override
-    public float calcularPrecioBase(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, Integer cantHabitaciones) {
+    public Float calcularPrecioBase(LocalDate fechaInicio, LocalDate fechaFin, Integer cantPersonas, Integer cantHabitaciones) {
         float precioMenor = Float.MAX_VALUE;
         long diasEstadia = ChronoUnit.DAYS.between(fechaInicio, fechaFin.plusDays(1));
         for (Habitacion habitacion : habitaciones){
@@ -52,7 +53,7 @@ public class Hotel extends Alojamiento implements IDiaDeSol{
     }
 
     @Override
-    public void mostrarInfoDiaDeSol(int cantPersonas, LocalDate fechaInicio) {
+    public void mostrarInfoDiaDeSol(Integer cantPersonas, LocalDate fechaInicio) {
         if (!tieneDiaDeSol()) return;
         System.out.println("\n+--------------- " + nombre + " ---------------+");
         System.out.println("Calificación: " + calificacion);
@@ -87,7 +88,7 @@ public class Hotel extends Alojamiento implements IDiaDeSol{
     }
 
     @Override
-    public float calcularPrecioBaseDiaSol(int cantPersonas) {
+    public float calcularPrecioBaseDiaSol(Integer cantPersonas) {
         return diaDeSol.getPrecioPorPersona() * cantPersonas;
     }
 

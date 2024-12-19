@@ -29,8 +29,8 @@ public abstract class Alojamiento {
     }
 
     // Métodos abstractos
-    public abstract  boolean estaDisponible(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, Integer cantHabitaciones, List<ReservaData> reservas);
-    public abstract float calcularPrecioBase(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, Integer cantHabitaciones);
+    public abstract  boolean estaDisponible(LocalDate fechaInicio, LocalDate fechaFin, Integer cantPersonas, Integer cantHabitaciones, List<ReservaData> reservas);
+    public abstract Float calcularPrecioBase(LocalDate fechaInicio, LocalDate fechaFin, Integer cantPersonas, Integer cantHabitaciones);
 
     // Métodos concretos
     public void mostrarInformacion(){
@@ -42,20 +42,20 @@ public abstract class Alojamiento {
         System.out.println("+---------------------------------------------+");
     }
 
-    public void mostrarInformacion(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, Integer cantHabitaciones) {
+    public void mostrarInformacion(LocalDate fechaInicio, LocalDate fechaFin, Integer cantPersonas, Integer cantHabitaciones) {
         System.out.println("\n+--------------- " + nombre + " ---------------+");
         System.out.println("Calificación: " + calificacion);
 
-        float precioPorNoche = calcularPrecioBase(fechaInicio, fechaInicio, cantPersonas, cantHabitaciones);
-        float precioBase = calcularPrecioBase(fechaInicio, fechaFin, cantPersonas, cantHabitaciones);
-        float precioTotal = calcularPrecioTotal(precioBase, fechaInicio, fechaFin);
-        float ajustePrecio = calcularAjustePrecio(fechaInicio, fechaFin);
+        Float precioPorNoche = calcularPrecioBase(fechaInicio, fechaInicio, cantPersonas, cantHabitaciones);
+        Float precioBase = calcularPrecioBase(fechaInicio, fechaFin, cantPersonas, cantHabitaciones);
+        Float precioTotal = calcularPrecioTotal(precioBase, fechaInicio, fechaFin);
+        Float ajustePrecio = calcularAjustePrecio(fechaInicio, fechaFin);
 
         mostrarPrecios(precioPorNoche, precioBase, precioTotal, ajustePrecio);
         System.out.println("+---------------------------------------------+");
     }
 
-    private void mostrarPrecios(float precioPorNoche, float precioBase, float precioTotal, float ajustePrecio) {
+    private void mostrarPrecios(Float precioPorNoche, Float precioBase, Float precioTotal, Float ajustePrecio) {
         System.out.println("Precio por noche: $" + precioPorNoche);
         System.out.println("Precio base: $" + precioBase);
 
@@ -71,11 +71,11 @@ public abstract class Alojamiento {
         habitaciones.add(habitacion);
     }
 
-    public float calcularPrecioTotal(float precioBase, LocalDate fechaInicio, LocalDate fechaFin){
+    public Float calcularPrecioTotal(Float precioBase, LocalDate fechaInicio, LocalDate fechaFin){
         return precioBase + (precioBase * calcularAjustePrecio(fechaInicio, fechaFin));
     }
 
-    public float calcularAjustePrecio(LocalDate fechaInicio, LocalDate fechaFin){
+    public Float calcularAjustePrecio(LocalDate fechaInicio, LocalDate fechaFin){
         boolean[] aplicaDescuento = new boolean[]{false,false,false};
         long diasEstadia = ChronoUnit.DAYS.between(fechaInicio, fechaFin.plusDays(1));
 
