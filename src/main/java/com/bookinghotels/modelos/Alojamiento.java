@@ -13,6 +13,7 @@ public abstract class Alojamiento {
     protected String descripcion;
     protected Integer maxAdultos;
     protected Integer maxNinos;
+    protected Integer maxPersonas;
     protected List<Habitacion> habitaciones;
 
     // Constructor
@@ -23,12 +24,13 @@ public abstract class Alojamiento {
         this.calificacion = calificacion;
         this.maxAdultos = maxAdultos;
         this.maxNinos = maxNinos;
+        this.maxPersonas = maxAdultos + maxNinos;
         this.habitaciones = new ArrayList<>();
     }
 
     // Métodos abstractos
-    public abstract  boolean estaDisponible(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones, List<ReservaData> reservas);
-    public abstract float calcularPrecioBase(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones);
+    public abstract  boolean estaDisponible(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, Integer cantHabitaciones, List<ReservaData> reservas);
+    public abstract float calcularPrecioBase(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, Integer cantHabitaciones);
 
     // Métodos concretos
     public void mostrarInformacion(){
@@ -40,24 +42,29 @@ public abstract class Alojamiento {
         System.out.println("+---------------------------------------------+");
     }
 
-    public void mostrarInformacion(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones) {
+    public void mostrarInformacion(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, Integer cantHabitaciones) {
         System.out.println("\n+--------------- " + nombre + " ---------------+");
-        System.out.println("Calificación: " + calificacion );
-        if (descripcion != null){
-            System.out.println("Descripción: " + calificacion );
-        }
-        float precioPorNoche = calcularPrecioBase(fechaInicio, fechaInicio, cantPersonas,cantHabitaciones);
-        float precioBase = calcularPrecioBase(fechaInicio, fechaFin, cantPersonas,cantHabitaciones);
+        System.out.println("Calificación: " + calificacion);
+
+        float precioPorNoche = calcularPrecioBase(fechaInicio, fechaInicio, cantPersonas, cantHabitaciones);
+        float precioBase = calcularPrecioBase(fechaInicio, fechaFin, cantPersonas, cantHabitaciones);
         float precioTotal = calcularPrecioTotal(precioBase, fechaInicio, fechaFin);
+        float ajustePrecio = calcularAjustePrecio(fechaInicio, fechaFin);
+
+        mostrarPrecios(precioPorNoche, precioBase, precioTotal, ajustePrecio);
+        System.out.println("+---------------------------------------------+");
+    }
+
+    private void mostrarPrecios(float precioPorNoche, float precioBase, float precioTotal, float ajustePrecio) {
         System.out.println("Precio por noche: $" + precioPorNoche);
         System.out.println("Precio base: $" + precioBase);
-        if(calcularAjustePrecio(fechaInicio,fechaFin) > 0){
-            System.out.println("Incremento de " + calcularAjustePrecio(fechaInicio,fechaFin) * 100 + "%");
-        }else if(calcularAjustePrecio(fechaInicio, fechaFin) < 0){
-            System.out.println("Descuento de " + calcularAjustePrecio(fechaInicio,fechaFin) * 100 + "%");
+
+        if (ajustePrecio != 0) {
+            String tipoAjuste = ajustePrecio > 0 ? "Incremento" : "Descuento";
+            System.out.println(tipoAjuste + " de " + ajustePrecio * 100 + "%");
         }
+
         System.out.println("Precio Total: $" + precioTotal);
-        System.out.println("+---------------------------------------------+");
     }
 
     public void agregarHabitacion(Habitacion habitacion){
@@ -139,6 +146,14 @@ public abstract class Alojamiento {
 
     public void setMaxNinos(Integer maxNinos) {
         this.maxNinos = maxNinos;
+    }
+
+    public Integer getMaxPersonas() {
+        return maxPersonas;
+    }
+
+    public void setMaxPersonas(Integer maxPersonas) {
+        this.maxPersonas = maxPersonas;
     }
 
     public List<Habitacion> getHabitaciones() {

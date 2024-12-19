@@ -21,7 +21,7 @@ public class Habitacion {
 
     // Métodos
     public void mostrarDetalles(){
-        System.out.println("+-------- " + tipo + " --------+");
+        System.out.println("\n+-------- " + tipo + " --------+");
         System.out.println(descripcion);
         System.out.println("Precio por noche: $" + precioPorNoche);
         System.out.println("Capacidad para " + capacidad + " personas");
@@ -33,9 +33,7 @@ public class Habitacion {
         for (ReservaData reserva : reservas) {
             List<Habitacion> habitacionesReservadas =  reserva.getHabitacionesReservadas();
             for(Habitacion habitacion : habitacionesReservadas){
-                if(habitacion.getTipo().equalsIgnoreCase(tipo)){
-                    habitacionesOcupadas++;
-                }
+                if(habitacion.getTipo().equalsIgnoreCase(tipo)) habitacionesOcupadas++;
             }
         }
         return habitacionesOcupadas < habitacionesDisponibles;

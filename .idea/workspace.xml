@@ -5,15 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6553db53-e3fe-47a3-a420-6c14b605080a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/inicializacion/InicializadorDeDatos.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/logicaNegocio/FiltroDeAlojamientos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/logicaNegocio/FiltroDeAlojamientos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/logicaNegocio/FiltroDeHabitacion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/logicaNegocio/FiltroDeHabitacion.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Alojamiento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Alojamiento.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Apartamento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Apartamento.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Finca.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Finca.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Habitacion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Habitacion.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Hotel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Hotel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/dto/ParametrosBusqueda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/dto/ParametrosBusqueda.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bookinghotels/utilidades/InicializadorDeDatos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bookinghotels/utilidades/InputUtilidades.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,5 +78,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/bookinghotels/modelos/Alojamiento.java</url>
+          <line>58</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -19,8 +19,8 @@ public class Apartamento extends Alojamiento{
 
     // Métodos
     @Override
-    public boolean estaDisponible(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones, List<ReservaData> reservas) {
-        if (cantPersonas > (maxAdultos + maxNinos)) return false;
+    public boolean estaDisponible(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, Integer cantHabitaciones, List<ReservaData> reservas) {
+        if (cantPersonas > maxPersonas) return false;
         for (ReservaData reserva : reservas) {
             if (!(fechaFin.isBefore(reserva.getFechaInicio()) || fechaInicio.isAfter(reserva.getFechaFin()))) return false;
         }
@@ -28,11 +28,10 @@ public class Apartamento extends Alojamiento{
     }
 
     @Override
-    public float calcularPrecioBase(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, int cantHabitaciones) {
-        int capacidadFinca = maxAdultos + maxNinos;
+    public float calcularPrecioBase(LocalDate fechaInicio, LocalDate fechaFin, int cantPersonas, Integer cantHabitaciones) {
         long diasEstadia = ChronoUnit.DAYS.between(fechaInicio, fechaFin.plusDays(1));
-        if(cantPersonas > capacidadFinca){
-            throw new IllegalArgumentException("La capacidad máxima de la finca es de " + capacidadFinca + " personas.");
+        if(cantPersonas > maxPersonas){
+            throw new IllegalArgumentException("La capacidad máxima de la finca es de " + maxPersonas + " personas.");
         } else {
             return precioPorNoche * (float) diasEstadia;
         }
