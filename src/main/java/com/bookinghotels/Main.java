@@ -1,12 +1,12 @@
 package com.bookinghotels;
 
+import com.bookinghotels.gestion.GestorMenus;
 import com.bookinghotels.logicaNegocio.FiltroDeAlojamientos;
 import com.bookinghotels.logicaNegocio.FiltroDeHabitacion;
 import com.bookinghotels.logicaNegocio.ReservaImplementation;
 import com.bookinghotels.modelos.*;
 import com.bookinghotels.modelos.dto.ParametrosBusqueda;
 import com.bookinghotels.inicializacion.InicializadorDeDatos;
-import com.bookinghotels.utilidades.InputUtilidades;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -46,23 +46,7 @@ public class Main {
     }
 
     public static void gestionarMenu(){
-        Scanner teclado = new Scanner(System.in);
-        boolean salir = false;
-        while (!salir){
-            mostrarMenu();
-            System.out.println("Ingresa la opción que deseas realizar: ");
-            int opcion = teclado.nextInt();
-            switch (opcion) {
-                case 0 -> {
-                    System.out.println("\n¡Gracias por usar nuestros servicios!\n");
-                    salir = true;
-                }
-                case 1 -> gestionarOpcionBuscarYReservar();
-                case 2 -> System.out.println("Consultar reservaciones. (Funcionalidad en desarrollo)");
-                case 3 -> gestionarOpcionModificarReserva();
-                default -> System.out.println("\nOpción no válida, intenta nuevamente.");
-            }
-        }
+        new GestorMenus().gestionarOpciones();
     }
 
     public static ParametrosBusqueda formularioBuscarAlojamientos(Scanner teclado) {
