@@ -43,7 +43,8 @@
 ## Arquitectura y Funcionalidad
 El proyecto está organizado en una estructura simple basada en POO que simula una base de datos en memoria.
 
-![Texto alternativo](assets/Booking diagrama clases POO.jpg)
+![Texto alternativo](assets/booking-diagrama-clases-POO.jpg)
+[Enlace del diagrama](https://miro.com/app/board/uXjVL1kQPPQ=/?share_link_id=557759462022)
 
 ### Datos Simulados
 - **Alojamientos**:
