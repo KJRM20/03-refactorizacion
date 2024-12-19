@@ -63,8 +63,34 @@ public class ReservaImplementation implements IReserva {
                 Alojamiento alojamiento = (Alojamiento) reserva.getAlojamiento();
                 System.out.println("Alojamiento: " + alojamiento.getNombre());
                 System.out.println("Categoría: " + alojamiento.getCategoria());
+                if(!reserva.getHabitacionesReservadas().isEmpty()){
+                    System.out.println("Habitaciones: ");
+                    List<Habitacion> habitacionesReservadas =  reserva.getHabitacionesReservadas();
+                    for(Habitacion habitacion : habitacionesReservadas){
+                        System.out.println("- " + habitacion.getTipo());
+                    }
+                }
                 System.out.println("+-------------------------------------------------+\n");
             }
         }
+    }
+
+    public ReservaData obtenerReserva(String correo, LocalDate fechaNacimiento) {
+        for(ReservaData reserva : reservasData){
+            if(reserva.getCliente().getCorreo().equalsIgnoreCase(correo)
+                    && reserva.getCliente().getFechaNacimiento().isEqual(fechaNacimiento)){
+                return reserva;
+            }
+        }
+        return null;
+    }
+
+    //Getters y Setters
+    public List<ReservaData> getReservasData() {
+        return reservasData;
+    }
+
+    public void setReservasData(List<ReservaData> reservasData) {
+        this.reservasData = reservasData;
     }
 }
